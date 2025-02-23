@@ -109,15 +109,16 @@ async function generateNewConversation(client, message, systemPrompt, recentMess
 
 function removeMentions(text) {
     return text
-    .replace(/@here/g, '꩜here')
-    .replace(/@everyone/g, '꩜everyone')
-    .replace(/@horde/g, '꩜horde')
-    .replace(/@alliance/g, '꩜alliance')
-    .replace(/@alliance/g, '꩜alliance')
-    .replace(/@Guild Leader - Horde/g, '꩜Guild Leader - Horde')
-    .replace(/@Guild Leader - Alliance/g, '꩜Guild Leader - Alliance')
-    .replace(/@Guild Officer - Horde/g, '꩜Guild Officer - Horde')
-    .replace(/@Guild Officer - Alliance/g, '꩜Guild Officer - Alliance')
+        .replace(/@here/g, '꩜here')
+        .replace(/@everyone/g, '꩜everyone')
+        .replace(/@horde/g, '꩜horde')
+        .replace(/@alliance/g, '꩜alliance')
+        .replace(/@Guild Leader - Horde/g, '꩜Guild Leader - Horde')
+        .replace(/@Guild Leader - Alliance/g, '꩜Guild Leader - Alliance')
+        .replace(/@Guild Officer - Horde/g, '꩜Guild Officer - Horde')
+        .replace(/@Guild Officer - Alliance/g, '꩜Guild Officer - Alliance')
+        .replace(/@cambot/g, '') // Remove any @cambot mentions
+        .replace(/@Cambot/g, '') // Also handle capitalized version
 }
 
 function removeFlaggedWords(text) {
@@ -783,6 +784,10 @@ const AIService = {
             // Clean response
             generatedText = removeMentions(generatedText);
             generatedText = removeFlaggedWords(generatedText);
+            // remove self mention
+            generatedText = generatedText.replace(new RegExp(`<@!?${client.user.id}>`, 'g'), '')
+                .replace(/@cambot/g, '')
+                .replace(/@Cambot/g, '');
                 
             if (DEBUG_MODE) {
                 UtilityLibrary.consoleInfo([[`🎨 generateTextResponse output:\n${generatedText}`, { color: 'green' }, 'middle']]);
