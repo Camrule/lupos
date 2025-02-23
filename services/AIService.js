@@ -32,7 +32,8 @@ const {
     LANGUAGE_MODEL_MAX_TOKENS,
     VOICE_MODEL_TYPE,
     FLAGGED_WORDS,
-    DEBUG_MODE
+    DEBUG_MODE,
+    LOCAL_LANGUAGE_MODEL_API_URL
 } = require('../config.json');
 
 async function generateEmbedding(text, type=LANGUAGE_MODEL_TYPE) {
@@ -495,6 +496,16 @@ async function generateVoice(message, text) {
     }
 
     return { filename, buffer };
+}
+
+async function checkLocalModelStatus() {
+    try {
+        const response = await fetch(`${LOCAL_LANGUAGE_MODEL_API_URL}/health`);
+        return response.ok;
+    } catch (error) {
+        console.error('Local model health check failed:', error);
+        return false;
+    }
 }
 
 const AIService = {

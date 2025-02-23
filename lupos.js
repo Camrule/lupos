@@ -179,31 +179,31 @@ async function onReady() {
             autoAssignRoles(client)
         }, 10 * 1000);
     }
-    const guild = client.guilds.cache.find(guild => guild.name === 'Classic Whitemane');
-    console.log('Channels for Classic Whitemane:');
-    for (const channel of guild.channels.cache.values()) {
-        if (channel.type === ChannelType.GuildText &&
-            // channel.parent.name !== 'Archived' &&
-            // channel.parent.name !== 'Archived: First Purge' &&
-            // channel.parent.name !== 'Archived: SOD' &&
-            // channel.parent.name !== 'Archived: Alliance' &&
-            // channel.parent.name !== 'Archived: WoW Classes' &&
-            // channel.parent.name !== '⚒ Administration' &&
-            // channel.parent.name !== 'Info' &&
-            // channel.parent.name !== 'Welcome'
-            (channel.parent.name === 'Classic WoW' ||
-            channel.parent.name === 'Classic Cataclysm')
-        ) {
-            const messages = await DiscordService.fetchMessages(channel.id, 1);
-            const lastMessageSentOn = luxon.DateTime.fromMillis(messages[0].createdTimestamp);
-            const now = luxon.DateTime.local();
-            const daysDifference = lastMessageSentOn.until(now).toDuration(['days']).toObject().days.toFixed(0);
-            const paddedDaysDifference = daysDifference.padStart(6, '0');
-            console.log(`${paddedDaysDifference} days`, channel.name);
-        }
-    }
-    // Griev keeps removing vesper's black role
-    autoAssignRoleToUser('215629443371106306', '1339285975217471551');
+    // const guild = client.guilds.cache.find(guild => guild.name === 'Classic Whitemane');
+    // console.log('Channels for Classic Whitemane:');
+    // for (const channel of guild.channels.cache.values()) {
+    //     if (channel.type === ChannelType.GuildText &&
+    //         // channel.parent.name !== 'Archived' &&
+    //         // channel.parent.name !== 'Archived: First Purge' &&
+    //         // channel.parent.name !== 'Archived: SOD' &&
+    //         // channel.parent.name !== 'Archived: Alliance' &&
+    //         // channel.parent.name !== 'Archived: WoW Classes' &&
+    //         // channel.parent.name !== '⚒ Administration' &&
+    //         // channel.parent.name !== 'Info' &&
+    //         // channel.parent.name !== 'Welcome'
+    //         (channel.parent.name === 'Classic WoW' ||
+    //         channel.parent.name === 'Classic Cataclysm')
+    //     ) {
+    //         const messages = await DiscordService.fetchMessages(channel.id, 1);
+    //         const lastMessageSentOn = luxon.DateTime.fromMillis(messages[0].createdTimestamp);
+    //         const now = luxon.DateTime.local();
+    //         const daysDifference = lastMessageSentOn.until(now).toDuration(['days']).toObject().days.toFixed(0);
+    //         const paddedDaysDifference = daysDifference.padStart(6, '0');
+    //         console.log(`${paddedDaysDifference} days`, channel.name);
+    //     }
+    // }
+    // // Griev keeps removing vesper's black role
+    // autoAssignRoleToUser('215629443371106306', '1339285975217471551');
     console.log('-------------------');
 }
 
